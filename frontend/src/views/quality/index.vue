@@ -33,10 +33,15 @@
       <button class="btn ghost" type="button" @click="resetFilters">重置条件</button>
     </form>
 
+    <div v-if="chlorinationPending" class="sync-banner">
+      有 {{ chlorinationPending }} 条出厂水余氯待办由消毒加氯单据同步而来，结论随加氯判定实时回写。
+    </div>
+
     <table class="data-table">
       <thead>
         <tr>
           <th v-for="column in columns" :key="column">{{ column }}</th>
+          <th>加氯单据</th>
           <th>当前状态</th>
           <th>可执行动作</th>
         </tr>
@@ -44,6 +49,7 @@
       <tbody>
         <tr v-for="row in rows" :key="String(row.id)">
           <td v-for="column in columns" :key="column">{{ row[column] ?? '—' }}</td>
+          <td>{{ row['加氯单据'] ? `由 ${row['加氯单据']} 同步` : '—' }}</td>
           <td>{{ row.status }}</td>
           <td class="row-actions">
             <button
@@ -58,7 +64,7 @@
           </td>
         </tr>
         <tr v-if="!rows.length">
-          <td :colspan="columns.length + 2" class="empty-state">暂无出厂水质检测数据，可先登记出厂水质检测记录</td>
+          <td :colspan="columns.length + 3" class="empty-state">暂无出厂水质检测数据，可先登记出厂水质检测记录</td>
         </tr>
       </tbody>
     </table>
@@ -85,7 +91,6 @@ const meta = moduleMeta('quality')
 const columns = ["检测编号", "检测项目", "实测值", "标准限值", "检测方法", "检测人员", "检测日期", "水质状态"]
 const actions = ["提交检测", "判定达标", "标记未达标"]
 const statuses = ["待检测", "检测中", "已达标", "未达标"]
-const stats = [{"label": "待检测项目", "value": 0}, {"label": "已达标项目", "value": 0}, {"label": "未达标项目", "value": 0}]
 
 const rows = ref<EntryRow[]>([])
 const total = ref(0)
@@ -97,6 +102,16 @@ const statusSummary = computed(() =>
     status,
     count: rows.value.filter((row) => String(row.status) === status).length,
   })),
+)
+
+const stats = computed(() => [
+  { label: '待检测项目', value: rows.value.filter((row) => row.status === '待检测' || row.status === '检测中').length },
+  { label: '已达标项目', value: rows.value.filter((row) => row.status === '已达标').length },
+  { label: '未达标项目', value: rows.value.filter((row) => row.status === '未达标').length },
+])
+
+const chlorinationPending = computed(
+  () => rows.value.filter((row) => row['加氯单据'] && row.status !== '已达标').length,
 )
 
 function resetFilters() {

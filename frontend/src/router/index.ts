@@ -7,6 +7,8 @@ const Dosing = () => import('@/views/dosing/index.vue')
 const Sedimentation = () => import('@/views/sedimentation/index.vue')
 const Filter = () => import('@/views/filter/index.vue')
 const Disinfection = () => import('@/views/disinfection/index.vue')
+const DisinfectionDetail = () => import('@/views/disinfection/detail.vue')
+const DisinfectionCreate = () => import('@/views/disinfection/create.vue')
 const Clearwell = () => import('@/views/clearwell/index.vue')
 const Quality = () => import('@/views/quality/index.vue')
 const Dispatch = () => import('@/views/dispatch/index.vue')
@@ -30,6 +32,8 @@ const router = createRouter({
     { path: '/sedimentation', name: 'sedimentation', component: Sedimentation },
     { path: '/filter', name: 'filter', component: Filter },
     { path: '/disinfection', name: 'disinfection', component: Disinfection },
+    { path: '/disinfection/new', name: 'disinfection-create', component: DisinfectionCreate },
+    { path: '/disinfection/:id', name: 'disinfection-detail', component: DisinfectionDetail },
     { path: '/clearwell', name: 'clearwell', component: Clearwell },
     { path: '/quality', name: 'quality', component: Quality },
     { path: '/dispatch', name: 'dispatch', component: Dispatch },
