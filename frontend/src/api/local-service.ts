@@ -1,4 +1,5 @@
 import { MODULE_BY_KEY } from '@/data/modules'
+import { listChlorination } from '@/data/disinfection/store'
 import { allRows, listRows, resetRows, saveRows } from '@/data/local-store'
 import type { ActionResult, EntryRow, ModuleMeta, OverviewResult, PageResult } from '@/data/types'
 
@@ -86,7 +87,18 @@ export function downloadEntries(key: string): void {
 
 export function loadOverview(): OverviewResult {
   const rows = allRows()
+  const chlorination = listChlorination()
+  const activeChlorination = chlorination.filter((row) => !row.archived)
   const modules = [...MODULE_BY_KEY.values()].map((meta) => {
+    if (meta.key === 'disinfection') {
+      // 消毒加氯走专属状态机：作废归档不计在办，余氯异常/投加失败计异常。
+      return {
+        name: meta.name,
+        created: chlorination.length,
+        pending: activeChlorination.filter((row) => row.status !== '已达标').length,
+        abnormal: activeChlorination.filter((row) => row.status === '余氯异常' || row.failed).length,
+      }
+    }
     const entries = rows[meta.key] ?? []
     return {
       name: meta.name,

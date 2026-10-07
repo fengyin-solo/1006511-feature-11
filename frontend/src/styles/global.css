@@ -35,3 +35,83 @@ body { margin: 0; background: #f6f8fb; color: #1f2937; }
 .error-text { color: #b42318; }
 .status-legend { display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 10px; font-size: 12px; color: var(--muted); }
 .legend-item { background: #eef2f7; border-radius: 999px; padding: 2px 10px; }
+
+/* 消毒加氯：状态徽标、余氯着色、版本标签 */
+.status-badge { display: inline-block; border-radius: 999px; padding: 2px 10px; font-size: 12px; white-space: nowrap; }
+.badge-待投加 { background: #eef2f7; color: #475569; }
+.badge-投加中 { background: #e0ecff; color: #1d4ed8; }
+.badge-已达标 { background: #dcfce7; color: #15803d; }
+.badge-余氯异常 { background: #fee2e2; color: #b42318; }
+.tag { display: inline-block; border-radius: 4px; padding: 0 6px; font-size: 11px; margin-left: 4px; }
+.tag-info { background: #e0e7ff; color: #3730a3; }
+.tag-warn { background: #fef3c7; color: #b45309; }
+.tag-muted { background: #e5e7eb; color: #6b7280; }
+.residual-ok { color: #15803d; font-weight: 600; }
+.residual-high, .residual-low { color: #b42318; font-weight: 600; }
+.residual-empty { color: var(--muted); }
+.cell-missing { color: #b42318; font-weight: 600; }
+.cell-sub { color: var(--muted); font-size: 12px; }
+.row-archived { color: #94a3b8; background: #f8fafc; }
+.row-failed td { box-shadow: inset 3px 0 0 #f59e0b; }
+.stat-warn { color: #b42318; }
+.stat-muted { color: var(--muted); }
+.notice-text { color: #15803d; }
+.filter-item select { min-width: 120px; }
+.filter-check { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--muted); }
+.filter-check input { margin: 0; }
+
+/* 弹窗表单 */
+.modal-mask { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); display: flex; align-items: center; justify-content: center; z-index: 50; }
+.modal-card { background: #fff; border-radius: 10px; width: 560px; max-width: calc(100vw - 40px); max-height: calc(100vh - 60px); overflow: auto; padding: 18px 20px; box-shadow: 0 18px 50px rgba(15, 23, 42, 0.25); }
+.modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.modal-head h3 { margin: 0; font-size: 16px; }
+.modal-hint { margin: 0 0 12px; font-size: 12px; color: var(--muted); background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; }
+.modal-form { display: flex; flex-direction: column; gap: 10px; }
+.modal-field span { display: block; font-size: 12px; color: var(--muted); margin-bottom: 3px; }
+.modal-field input, .modal-field select, .modal-field textarea { width: 100%; border: 1px solid var(--border); border-radius: 6px; padding: 7px 9px; font: inherit; }
+.required-mark { color: #b42318; font-style: normal; }
+.modal-foot { display: flex; justify-content: flex-end; gap: 8px; margin-top: 4px; }
+
+/* 明细页 */
+.title-version { font-size: 14px; color: var(--muted); margin: 0 8px; font-weight: 400; }
+.detail-empty { padding: 40px 0; }
+.alert { border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-bottom: 12px; border: 1px solid transparent; }
+.alert-warn { background: #fffbeb; border-color: #fcd34d; color: #b45309; }
+.alert-error { background: #fef2f2; border-color: #fca5a5; color: #b42318; }
+.alert-muted { background: #f1f5f9; border-color: #cbd5e1; color: #475569; }
+.detail-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; margin-bottom: 12px; }
+.detail-grid-wide { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
+.detail-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; margin-bottom: 12px; }
+.detail-card h3 { margin: 0 0 10px; font-size: 14px; }
+.detail-card dl { display: grid; grid-template-columns: 140px 1fr; gap: 6px 10px; margin: 0; font-size: 13px; }
+.detail-card dt { color: var(--muted); }
+.detail-card dd { margin: 0; }
+.detail-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.sub-table { font-size: 12px; }
+.sub-table th, .sub-table td { padding: 6px 8px; }
+.status-flow { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0; }
+.flow-step { position: relative; display: flex; align-items: center; gap: 10px; padding: 6px 0 6px 8px; color: var(--muted); }
+.flow-step:not(:last-child)::before { content: ''; position: absolute; left: 15px; top: 26px; bottom: -6px; width: 2px; background: #e2e8f0; }
+.flow-dot { width: 12px; height: 12px; border-radius: 50%; background: #e2e8f0; border: 2px solid #fff; z-index: 1; }
+.flow-done { color: #15803d; }
+.flow-done .flow-dot { background: #16a34a; }
+.flow-done:not(:last-child)::before { background: #86efac; }
+.flow-current { color: #1d4ed8; font-weight: 600; }
+.flow-current .flow-dot { background: #2563eb; box-shadow: 0 0 0 4px #dbeafe; }
+.flow-abnormal { color: #b42318; font-weight: 600; }
+.flow-abnormal .flow-dot { background: #dc2626; box-shadow: 0 0 0 4px #fee2e2; }
+.flow-archived { color: #94a3b8; }
+.flow-archived .flow-dot { background: #cbd5e1; }
+.timeline { list-style: none; margin: 0; padding: 0; }
+.timeline li { display: grid; grid-template-columns: 150px 180px 1fr; gap: 10px; padding: 6px 0; border-bottom: 1px dashed #e2e8f0; font-size: 13px; }
+.timeline-time { color: var(--muted); font-size: 12px; }
+.timeline-detail { color: #475569; }
+
+/* 出厂水质检测：同步待办标记 */
+.sync-flag { display: inline-block; background: #ede9fe; color: #6d28d9; border-radius: 4px; padding: 0 6px; font-size: 11px; margin-left: 6px; }
+
+@media (max-width: 1080px) {
+  .detail-grid, .detail-grid-wide { grid-template-columns: 1fr; }
+  .timeline li { grid-template-columns: 130px 1fr; }
+  .timeline-detail { grid-column: 2; }
+}
